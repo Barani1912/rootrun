@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function getIgnoredFolders(cwd) {
-    const ignoreFilePath = path.join(cwd, '.monostartignore');
+    const ignoreFilePath = path.join(cwd, '.rootrunignore');
     const ignoreSet = new Set(['node_modules', '.git']); // defaults
 
     if (fs.existsSync(ignoreFilePath)) {
