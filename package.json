@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Zero-config concurrent script runner for monorepos",
   "bin": {
-    "rootrun": "./bin/cli.js"
+    "rootrun": "bin/cli.js"
   },
   "files": [
     "bin",
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Barani1912/rootrun.git"
+    "url": "git+https://github.com/Barani1912/rootrun.git"
   },
   "keywords": [
     "cli",
