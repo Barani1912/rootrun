@@ -1,0 +1,32 @@
+{
+  "name": "rootrun",
+  "version": "1.0.0",
+  "description": "Zero-config concurrent script runner for monorepos",
+  "bin": {
+    "rootrun": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "cli",
+    "monorepo",
+    "concurrent",
+    "npm-scripts",
+    "dev-tools",
+    "runner"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "prepare": "node -e \"if(process.platform !== 'win32') try { require('child_process').execSync('chmod +x bin/cli.js') } catch (e) {}\""
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2"
+  }
+}
