@@ -1,62 +1,111 @@
-# rootrun
+# 🚀 rootrun
 
-A zero-config concurrent script runner for Node.js monorepos. 
+**The Zero-Config Concurrent Script Runner for Modern Monorepos**
 
-If you have a backend and a frontend directory in your project, you'd normally need two terminals to start your development servers. With `rootrun`, you just open one terminal at the root and type `npx rootrun dev`.
+[![npm version](https://img.shields.io/npm/v/rootrun.svg?style=flat-square)](https://www.npmjs.com/package/rootrun)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-`rootrun` will look for subdirectories, check their `package.json` for the requested script, and spawn concurrent processes. It prefixes terminal output with each folder's name using distinct colors so you can read logs comfortably in one place.
+`rootrun` is a lightweight, high-performance CLI tool designed to simplify the development workflow in projects with multiple subdirectories (monorepos). Instead of opening multiple terminal tabs to start your backend, frontend, and documentation servers, `rootrun` allows you to launch them all with a single, elegant command.
 
-## Installation
+---
 
+## ✨ Key Features
+
+- **Zero Configuration**: Works out of the box. No complex config files required.
+- **Concurrent Execution**: Spawns multiple child processes simultaneously.
+- **Smart Prefixing**: Automatically prefixes every line of output with the folder name.
+- **Color-Coded Logs**: Assigns a unique, rotating color to each folder for easy readability.
+- **Graceful Cleanup**: Kills all child processes cleanly when you press `Ctrl+C`.
+- **Intelligent Scanning**: Only runs scripts in folders that actually contain them.
+
+---
+
+## 🛠️ Installation
+
+You can run `rootrun` instantly without installation using `npx`, or install it globally for faster access.
+
+### Use with npx (Recommended)
 ```bash
-# Globablly install:
-npm install -g rootrun
-
-# Or run it without installing using npx:
 npx rootrun dev
 ```
 
-## Usage
+### Install Globally
+```bash
+npm install -g rootrun
+```
+
+---
+
+## 📖 How to Use
+
+Simply navigate to the root of your project and run:
 
 ```bash
-rootrun           # defaults to script name "dev"
-rootrun dev
-rootrun start
-rootrun build
-rootrun dev --verbose
+rootrun [script-name]
 ```
 
-### Example Project Structure
-```
-my-project/
-  frontend/
-    package.json    (has "dev" script installed - Vite)
-  backend/
-    package.json    (has "dev" script installed - Express)
-```
+### Commands & Examples
 
-Run `rootrun dev` in the `my-project/` directory:
+| Command | Description |
+| :--- | :--- |
+| `rootrun` | Runs the `dev` script in all subdirectories (default). |
+| `rootrun build` | Runs the `build` script concurrently in all packages. |
+| `rootrun start` | Starts all your production processes at once. |
+| `rootrun test` | Executes unit tests across your entire repository. |
+| `rootrun --verbose` | Displays extra debugging info (which scripts were skipped and why). |
 
-```
-[frontend] VITE ready at http://localhost:5173
-[backend ] Server running on port 5000
-```
+---
 
-### Ignoring directories
-You can ignore particular directories by placing a `.monostartignore` file at the root. Standard ignore patterns apply:
+## 📂 Example Project Structure
+
+Imagine a project like this:
 
 ```text
-# .monostartignore
-node_modules
-dist
-docs
+my-awesome-app/
+├── backend/        # Node.js Express Server
+├── frontend/       # React (Vite) App
+├── docs/           # Docusaurus Site
+└── package.json
 ```
 
-## Options
-- `-v, --verbose`: Print extra debugging information (useful for checking missing / skipped packages).
+Running `rootrun dev` from the `my-awesome-app` folder will produce beautifully organized logs:
 
-## Publishing to NPM
-1. Login to NPM: `npm login`
-2. Verify package name availability on https://npmjs.com
-3. Run `npm publish`
-4. Test locally with `npx rootrun dev`
+```text
+[backend ] Server listening on port 5000...
+[frontend] VITE v5.1.0  ready in 450 ms
+[docs    ] Docusaurus started on http://localhost:3000
+[backend ] Connected to MongoDB.
+```
+
+---
+
+## 🛡️ Ignoring Directories
+
+If you want to skip certain folders, create a `.rootrunignore` file in your project root.
+
+```text
+# .rootrunignore
+node_modules
+dist
+temp-logs
+legacy-backup
+```
+
+By default, `rootrun` always ignores `node_modules` and `.git`.
+
+---
+
+## ⚙️ Requirements
+
+- **Node.js**: `v14.0.0` or higher.
+- **NPM**: Works with standard npm-based projects.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+*Made with ❤️ for developers who love clean terminals.*
