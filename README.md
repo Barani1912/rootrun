@@ -17,6 +17,7 @@
 - **Color-Coded Logs**: Assigns a unique, rotating color to each folder for easy readability.
 - **Graceful Cleanup**: Kills all child processes cleanly when you press `Ctrl+C`.
 - **Intelligent Scanning**: Only runs scripts in folders that actually contain them.
+- **Script Fallbacks**: Automatically falls back to `start` if the requested `dev` script is missing.
 
 ---
 
@@ -48,11 +49,13 @@ rootrun [script-name]
 
 | Command | Description |
 | :--- | :--- |
-| `rootrun` | Runs the `dev` script in all subdirectories (default). |
+| `rootrun` | Runs the `dev` script. If `dev` is missing, it falls back to `start`. |
 | `rootrun build` | Runs the `build` script concurrently in all packages. |
 | `rootrun start` | Starts all your production processes at once. |
 | `rootrun test` | Executes unit tests across your entire repository. |
-| `rootrun --verbose` | Displays extra debugging info (which scripts were skipped and why). |
+| `rootrun --verbose` | Displays extra debugging info (including active scripts and skips). |
+
+> **Note on Fallbacks**: When running `rootrun dev` (the default), if a subdirectory contains a `start` script but no `dev` script, `rootrun` will intelligently execute `npm run start` instead of skipping the folder.
 
 ---
 
