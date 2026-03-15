@@ -48,12 +48,18 @@ function scanDirectories(cwd, scriptName, verbose) {
             continue;
         }
 
-        if (!parsedPkg.scripts || !parsedPkg.scripts[scriptName]) {
-            packages.push({ name, cwd: dirPath, skipped: true, skipReason: `script "${scriptName}" not found` });
-            continue;
+        let activeScript = scriptName;
+        if (!parsedPkg.scripts || !parsedPkg.scripts[activeScript]) {
+            // Fallback logic: if searching for "dev", try "start"
+            if (scriptName === 'dev' && parsedPkg.scripts && parsedPkg.scripts['start']) {
+                activeScript = 'start';
+            } else {
+                packages.push({ name, cwd: dirPath, skipped: true, skipReason: `script "${scriptName}" not found` });
+                continue;
+            }
         }
 
-        packages.push({ name, cwd: dirPath, skipped: false });
+        packages.push({ name, cwd: dirPath, skipped: false, script: activeScript });
     }
 
     return packages;
