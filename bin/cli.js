@@ -36,12 +36,17 @@ program
         const startedPackages = packages.filter(p => !p.skipped);
 
         if (startedPackages.length === 0) {
-            console.log(`No packages found with script "${scriptName}". Exiting.`);
+            console.log(`No packages found with script "${scriptName}" or fallback. Exiting.`);
             process.exit(1);
         }
 
-        const startedNames = startedPackages.map(p => p.name).join(', ');
-        console.log(`Starting "${scriptName}" in: ${startedNames}`);
+        // Determine max length for uniform padding across prefixes
+        const maxNameLen = Math.max(...startedPackages.map(p => p.name.length));
+
+        console.log('Starting scripts:');
+        startedPackages.forEach(p => {
+            console.log(`  ➜ ${p.name.padEnd(maxNameLen)} : npm run ${p.script}`);
+        });
         console.log('────────────────────────────────────────');
 
         // Run the processes concurrently

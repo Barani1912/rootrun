@@ -33,11 +33,13 @@ function runProcesses(packages, scriptName, verbose) {
         const paddedName = pkg.name.padEnd(maxNameLen);
         const log = createLogger(paddedName);
 
+        const activeScript = pkg.script;
+
         if (verbose) {
-            console.log(`Spawning ${npmCmd} run ${scriptName} in ${pkg.cwd}`);
+            console.log(`Spawning ${npmCmd} run ${activeScript} in ${pkg.cwd}`);
         }
 
-        const child = spawn(npmCmd, ['run', scriptName], {
+        const child = spawn(npmCmd, ['run', activeScript], {
             cwd: pkg.cwd,
             stdio: 'pipe',
             shell: process.platform === 'win32'
