@@ -12,11 +12,16 @@ program
 
 program
     .argument('[scriptName]', 'Name of the script to run in subdirectories', 'dev')
+    .argument('[folders...]', 'Only run in folders whose name contains one of these terms')
     .option('-v, --verbose', 'Output extra debugging information')
-    .action((scriptName, options) => {
+    .action((scriptName, folders, options) => {
         console.log(`\nrootrun — running script "${scriptName}"\n`);
 
-        const packages = scanDirectories(process.cwd(), scriptName, options.verbose);
+        if (folders.length > 0) {
+            console.log(`Filtering folders: ${folders.join(', ')}\n`);
+        }
+
+        const packages = scanDirectories(process.cwd(), scriptName, options.verbose, folders);
 
         if (packages.length === 0) {
             console.log(`No folders found to scan. Exiting.`);

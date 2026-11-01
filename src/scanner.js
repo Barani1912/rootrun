@@ -2,9 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { getIgnoredFolders } = require('./ignore');
 
-function scanDirectories(cwd, scriptName, verbose) {
+function scanDirectories(cwd, scriptName, verbose, filters = []) {
     const packages = [];
     const ignoredFolders = getIgnoredFolders(cwd);
+
+    // Normalize filters to lowercase for case-insensitive matching
+    const normalizedFilters = filters.map(f => f.toLowerCase());
 
     // Read all items in the current directory
     let items;
@@ -25,6 +28,16 @@ function scanDirectories(cwd, scriptName, verbose) {
         if (name.startsWith('.') || ignoredFolders.has(name)) {
             if (verbose) console.log(`Skipping ignored/hidden folder: ${name}`);
             continue;
+        }
+
+        // If filters are provided, only include directories that match at least one filter
+        if (normalizedFilters.length > 0) {
+            const lowerName = name.toLowerCase();
+            const matched = normalizedFilters.some(filter => lowerName.includes(filter));
+            if (!matched) {
+                if (verbose) console.log(`Skipping folder (no filter match): ${name}`);
+                continue;
+            }
         }
 
         const dirPath = path.join(cwd, name);

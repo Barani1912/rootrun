@@ -1,6 +1,6 @@
 {
   "name": "rootrun",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Zero-config concurrent script runner for monorepos",
   "bin": {
     "rootrun": "bin/cli.js"
